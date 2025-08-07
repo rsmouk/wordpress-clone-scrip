@@ -1,3 +1,5 @@
+# Create a fixed script with correct values
+cat > clone-wordpress-fixed.sh << 'EOF'
 #!/bin/bash
 
 # ========================================
@@ -70,7 +72,7 @@ fi
 
 # Clean up any existing database with "new" suffix
 echo "🗑️ Cleaning up any existing database..."
-mysql -u root -p'YOUR_MYSQL_ROOT_PASSWORD' -e "
+mysql -u root -p'EAC3mP9(~oAi' -e "
 DROP DATABASE IF EXISTS \`$NEW_DB_NAME\`;
 DROP USER IF EXISTS '$NEW_DB_USER'@'localhost';
 FLUSH PRIVILEGES;
@@ -123,7 +125,7 @@ fi
 
 # Step 4: Copy files and check .htaccess
 echo "📁 Copying website files..."
-SOURCE_PATH="/home/SOURCE_DOMAIN/public_html"
+SOURCE_PATH="/home/yumquik.com/public_html"
 NEW_PATH="/home/$NEW_DOMAIN/public_html"
 
 if [ ! -d "$SOURCE_PATH" ]; then
@@ -224,7 +226,7 @@ echo "🔄 Cloning database..."
 
 # Test source database connection
 echo "🔍 Testing source database connection..."
-SOURCE_TEST=$(mysql -u SOURCE_DB_USER -p'SOURCE_DB_PASSWORD' -e "USE SOURCE_DB_NAME; SELECT COUNT(*) as count FROM wp_options;" 2>/dev/null)
+SOURCE_TEST=$(mysql -u u603962687_LN5tl -p'poyjdInbSz' -e "USE u603962687_mthcv; SELECT COUNT(*) as count FROM wp_options;" 2>/dev/null)
 
 if [ $? -eq 0 ]; then
     echo "✅ Source database accessible"
@@ -232,12 +234,12 @@ if [ $? -eq 0 ]; then
     
     # Export with proper options
     echo "📤 Exporting source database..."
-    mysqldump -u SOURCE_DB_USER -p'SOURCE_DB_PASSWORD' \
+    mysqldump -u u603962687_LN5tl -p'poyjdInbSz' \
         --single-transaction \
         --routines \
         --triggers \
         --add-drop-table \
-        SOURCE_DB_NAME > /tmp/source_export.sql 2>/dev/null
+        u603962687_mthcv > /tmp/source_export.sql 2>/dev/null
     
     if [ $? -eq 0 ] && [ -s "/tmp/source_export.sql" ]; then
         echo "✅ Database exported successfully ($(wc -l < /tmp/source_export.sql) lines)"
@@ -250,7 +252,7 @@ if [ $? -eq 0 ]; then
             echo "✅ Database imported successfully"
         else
             echo "⚠️ Import with user failed, trying with root..."
-            mysql -u root -p'YOUR_MYSQL_ROOT_PASSWORD' "$NEW_DB_NAME" < /tmp/source_export.sql 2>/dev/null
+            mysql -u root -p'EAC3mP9(~oAi' "$NEW_DB_NAME" < /tmp/source_export.sql 2>/dev/null
             
             if [ $? -eq 0 ]; then
                 echo "✅ Database imported successfully with root"
@@ -290,13 +292,13 @@ fi
 
 # Step 7: Update URLs in database
 echo "🔧 Updating domain in database..."
-mysql -u root -p'YOUR_MYSQL_ROOT_PASSWORD' "$NEW_DB_NAME" -e "
+mysql -u root -p'EAC3mP9(~oAi' "$NEW_DB_NAME" -e "
 UPDATE wp_options SET option_value = 'https://$NEW_DOMAIN' WHERE option_name = 'home';
 UPDATE wp_options SET option_value = 'https://$NEW_DOMAIN' WHERE option_name = 'siteurl';
-UPDATE wp_posts SET post_content = REPLACE(post_content, 'https://SOURCE_DOMAIN', 'https://$NEW_DOMAIN');
-UPDATE wp_posts SET post_content = REPLACE(post_content, 'http://SOURCE_DOMAIN', 'https://$NEW_DOMAIN');
-UPDATE wp_posts SET post_excerpt = REPLACE(post_excerpt, 'https://SOURCE_DOMAIN', 'https://$NEW_DOMAIN');
-UPDATE wp_comments SET comment_content = REPLACE(comment_content, 'https://SOURCE_DOMAIN', 'https://$NEW_DOMAIN');
+UPDATE wp_posts SET post_content = REPLACE(post_content, 'https://yumquik.com', 'https://$NEW_DOMAIN');
+UPDATE wp_posts SET post_content = REPLACE(post_content, 'http://yumquik.com', 'https://$NEW_DOMAIN');
+UPDATE wp_posts SET post_excerpt = REPLACE(post_excerpt, 'https://yumquik.com', 'https://$NEW_DOMAIN');
+UPDATE wp_comments SET comment_content = REPLACE(comment_content, 'https://yumquik.com', 'https://$NEW_DOMAIN');
 " 2>/dev/null
 
 if [ $? -eq 0 ]; then
@@ -358,7 +360,7 @@ Created: $(date)
 
 WordPress Admin URL: https://$NEW_DOMAIN/wp-admin/
 Database Host: localhost
-Source Cloned From: SOURCE_DOMAIN
+Source Cloned From: yumquik.com
 
 Files Status:
 - wp-config.php: Updated ✅
@@ -398,3 +400,6 @@ if curl -s -H "Host: $NEW_DOMAIN" http://localhost/ | grep -qi "wordpress\|html"
 else
     echo "⚠️ Website may need additional configuration"
 fi
+EOF
+
+chmod +x clone-wordpress-fixed.sh
