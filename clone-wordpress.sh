@@ -2,9 +2,9 @@
 
 # ========================================
 # WordPress Site Clone Script
-# Author: Your Name
-# Description: Clone WordPress sites on CyberPanel
-# Source: yumquik.com
+# Author: Mohamed Asfar (infinyteam)
+# Description: Clone WordPress sites on CyberPanel (do not share this file)
+# Source: infinyteam.com
 # ========================================
 
 # 🔧 Interactive domain input
