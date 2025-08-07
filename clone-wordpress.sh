@@ -4,7 +4,7 @@
 # WordPress Site Clone Script
 # Author: Mohamed Asfar (infinyteam)
 # Description: Clone WordPress sites on CyberPanel (do not share this file)
-# Source: infinyteam.com
+# Source: infinyteam.com 
 # ========================================
 
 # 🔧 Interactive domain input
